@@ -13,9 +13,10 @@ const handleRefreshToken = (req, res) => {
     if (!cookies?.jwt) return res.sendStatus(401); //unauthorized
     console.log(cookies.jwt);
     const refreshToken = cookies.jwt;
+    console.log('Refersh Token:', refreshToken);
 
     const foundUser = usersDB.users.find(person => person.refreshToken === refreshToken);
-    console.log(foundUser);
+    console.log('Found User:', foundUser);
     if (!foundUser) {
         return res.sendStatus(403); // Forbidden
     }
