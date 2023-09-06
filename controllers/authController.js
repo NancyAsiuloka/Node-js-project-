@@ -40,7 +40,7 @@ const handleLogin = async (req, res) => {
 
         // Save refreshToken with the current user
         const otherUsers = usersDB.users.filter(person => person.username !== foundUser.username);
-        const currentUser = { ...foundUser, refreshToken };
+        const currentUser = {...foundUser, refreshToken};
         usersDB.setUsers([...otherUsers, currentUser]);
 
         await fsPromises.writeFile(
