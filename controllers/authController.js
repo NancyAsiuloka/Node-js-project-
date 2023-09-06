@@ -2,7 +2,7 @@ const usersDB = {
     users: require('../model/users.json'),
     setUsers: function(data) {
         this.users = data;
-    },
+    }
 };
 
 const bcrypt = require('bcrypt');
@@ -18,6 +18,7 @@ const handleLogin = async (req, res) => {
     }
 
     const foundUser = usersDB.users.find(person => person.username === user);
+
     if (!foundUser) {
         return res.sendStatus(401); // Unauthorized
     }
@@ -27,13 +28,13 @@ const handleLogin = async (req, res) => {
     if (match) {
         // Create JWTs (JSON Web Tokens) to protect routes
         const accessToken = jwt.sign(
-            { username: foundUser.username },
+            { "username": foundUser.username },
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '60s' }
         );
 
         const refreshToken = jwt.sign(
-            { username: foundUser.username },
+            { "username": foundUser.username },
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: '1d' }
         );
