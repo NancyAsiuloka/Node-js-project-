@@ -5,6 +5,7 @@ const cors = require('cors');
 const corsOptions = require('./config/corsOption')
 const verifyJWT = require('./middleware/verifyJWT');
 const cookieParser = require('cookie-parser');
+const credentials = require('./middleware/credentials')
 const PORT = process.env.PORT || 3500;
 
 // Custom middleware logger
@@ -12,6 +13,10 @@ app.use((req, res, next) => {
     console.log(`${req.method} ${req.path}`);
     next();
 });
+
+// handle options credentials check - before CORS
+// and fetch cookies credentials requirement
+app.use(credentials);
 
 // CORS
 app.use(cors(corsOptions));
@@ -21,7 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 // Built-in middleware for JSON
 app.use(express.json());
 
-// middlewares for cookies
+// middlewares for cook ies
 app.use(cookieParser());
 
 // Serve static files
@@ -32,6 +37,7 @@ app.use('/', require('./routes/root'));
 app.use('/register', require('./routes/register'));
 app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
+app.use('/logout', require('./routes/logout'));
 
 app.use(verifyJWT);
 app.use('/employees', require('./routes/api/employees'));
