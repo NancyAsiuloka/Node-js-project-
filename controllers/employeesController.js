@@ -1,30 +1,22 @@
-const data = {
-    employees: require('../model/employees.json'),
-    setEmployees: function(data) { this.employees = data}
-};
+const Employee = require('../model/Employee');
 
-const getAllEmployees = (req, res) => {
-    res.json(data.employees);
+const getAllEmployees = async(req, res) => {
+    const employees = await Employee.findOne();
+    if(!employees) return res.status(204)
+    .json({ message: 'No employees found'});
+    res.json(employees);
 }
 
-const createNewEmployee = (req, res) => {
-    try {
-        const newEmployee = {
-            id: (data.employees.length > 0 ? data.employees[data.employees.length - 1].id + 1 : 1),
-            firstname: req.body.firstname,
-            lastname: req.body.lastname
-        };
-
-        if (!newEmployee.firstname || !newEmployee.lastname) {
-            return res.status(400).json({ "message": 'First and last names are required' });
+const createNewEmployee = async (req, res) => {
+        if(!req?.body?.firstname || !req?.body?.lastname){
+            return res.status(400)
+            .json({ message: 'First and last names are required' });
         }
 
-        data.setEmployees([...data.employees, newEmployee]);
-        res.status(201)
-        .json({ "message": 'Employee created successfully', employees: data.employees });
-    } catch (error) {
-        console.error('Error creating employee:', error);
-        res.status(500).json({ "message": 'Internal server error' });
+    try {
+
+    } catch (err) {
+        console.log(err);
     }
 };
 
