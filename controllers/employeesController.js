@@ -43,27 +43,19 @@ const updateEmployee =  async (req, res) => {
 
 
 
-const deleteEmployee = (req, res) => {
-    // Check if req.body.id is a valid integer
-    const employeeId = parseInt(req.body.id);
-    if (isNaN(employeeId)) {
-        return res.status(400).json({ message: 'Invalid employee ID' });
-    }
+const deleteEmployee = async (req, res) => {
+    if(!req?.body?.id) return res.status(400)
+    .json({ message: 'Employee Id required.'});
 
     // Find the employee to delete
-    const employee = data.employees.find(emp => emp.id === employeeId);
+    const employee = await Employee.findOne({ _id: req.body.id }).exec();
     if (!employee) {
-        return res.status(400).json({ message: `Employee ID ${employeeId} not found` });
+        return res.status(204)
+        .json({"message": `No employee matches ${req.body.id}` });
     }
 
-    // Filter out the employee from the data.employees array
-    const filteredArray = data.employees.filter(emp => emp.id !== employeeId);
-
-    // Update the data
-    data.setEmployees([...filteredArray]);
-
-    // Respond with the updated employee list
-    res.json(data.employees);
+    const result = await employee.deleteOne({ _id: req.body.id });
+    res.json(result);
 };
 
 
