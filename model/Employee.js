@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 const employeeSchema = new Schema({
     firstname: {
-        type: String, // Use String instead of 'string'
+        type: 'string',
         required: true
     },
     lastname: {
-        type: String, // Use String instead of 'string'
+        type: 'string',
         required: true
     }
 });
