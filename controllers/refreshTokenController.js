@@ -4,12 +4,9 @@ const jwt = require('jsonwebtoken');
 const handleRefreshToken = (req, res) => {
     const cookies = req.cookies;
     if (!cookies?.jwt) return res.sendStatus(401); //unauthorized
-    console.log(cookies.jwt);
     const refreshToken = cookies.jwt;
-    console.log('Refresh Token:', refreshToken);
 
     const foundUser = usersDB.users.find(person => person.refreshToken === refreshToken);
-    console.log('Found User:', foundUser);
     if (!foundUser) {
         return res.sendStatus(403); // Forbidden
     }
