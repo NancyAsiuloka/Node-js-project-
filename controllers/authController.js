@@ -41,8 +41,8 @@ const handleLogin = async (req, res) => {
         console.log(result);
 
         // Set cookies as HTTP-only
-        res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true,
-            maxAge: 24 * 60 * 60 * 1000 });
+        res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None',
+            maxAge: 24 * 60 * 60 * 1000 }); //secre: true - would be needed in production
         res.json({ accessToken });
     } else {
         res.sendStatus(401);
