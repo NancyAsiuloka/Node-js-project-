@@ -13,6 +13,10 @@ const handleLogout = async (req, res) => {
         res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true});
         return res.sendStatus(204);
     }
+    // Delete refershToken in db
+    foundUser.refreshToken = '';
+    const result = await foundUser.save();
+    console.log(result);
 
     res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true}); //secure: true - only serves on https
     res.sendStatus(204);
