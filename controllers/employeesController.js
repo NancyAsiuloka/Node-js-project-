@@ -3,7 +3,6 @@
 
  const getAllEmployees = async (req, res) => {
          const employees = await Employee.find(); // Use `find` to get all employees
-     console.log(employees)
          if (!employees) return res.status(204)
          .json({ message: 'No employees found' });
 
