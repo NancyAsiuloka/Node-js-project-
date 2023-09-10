@@ -2,6 +2,7 @@
  const Employee = require('../model/Employee');
 
  const getAllEmployees = async (req, res) => {
+    // Use `find` to get all employees
          const employees = await Employee.find();
          if (!employees) return res.status(204)
          .json({ message: 'No employees found' });
